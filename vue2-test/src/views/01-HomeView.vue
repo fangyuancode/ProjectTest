@@ -17,7 +17,7 @@ export default {
         childList: [
           {
             id: "2095",
-            name: "测试企业1",
+            name: "测试企业dfsfsf1",
             relationType: 1,
             childList: [],
           },
@@ -233,6 +233,7 @@ export default {
                 let str = `{name|${n}}`;
                 let isMain = params.data.relationType === 0;
                 str = isMain ? `{name|${n}} {current|本企业} {main|总部}` : str;
+                // console.log("str", str);
                 return str;
               },
               rich: {
@@ -321,6 +322,7 @@ export default {
           }
         }
       }
+
       nodesStutes(data);
       this.Echarts.setOption(options, true);
     },
