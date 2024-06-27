@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/01-HomeView.vue'
+import HomeView from '../views/01-EchartsTree.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    redirect: '/home'
+
+  },
   {
     path: '/home',
     name: 'home',
@@ -13,12 +18,17 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/02-AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/02-RemerPassworld.vue')
   },
   {
     path: '/test',
     name: 'test',
-    component: () => import(/* webpackChunkName: "about" */ '../views/03-test.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/03-QrCode.vue')
+  },
+  {
+    path: '/getheight',
+    name: 'getheight',
+    component: () => import('../views/04-GetHeight.vue')
   }
 ]
 

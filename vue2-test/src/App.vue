@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/test">test</router-link>
+      <router-link to="/">echarts树形图结构配置</router-link> |
+      <router-link to="/about">记住密码</router-link> |
+      <router-link to="/test">二维码生成</router-link> |
+      <router-link to="/getheight">获取元素高度</router-link> |
 
     </nav>
     <router-view />

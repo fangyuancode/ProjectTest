@@ -33,6 +33,7 @@ export default {
     this.getCookie();
   },
   methods: {
+    // 页面挂载时，判断密码是否存在。
     getCookie() {
       this.loginForm.username = this.$cookie.get("username");
       if (this.$cookie.get("password")) {
@@ -45,14 +46,15 @@ export default {
         this.loginForm.username = "";
       }
     },
+    // 点击登录时，保存账号密码，且对密码进行加密存储。
     handleLogin() {
       let code = 200;
       if (code == 200) {
         if (this.rememberPassword) {
           this.$cookie.set("username", this.loginForm.username, {
             expires: 3,
-          });
-          //  第二个参数为密钥，这里我设置为123456
+          }); //创建有效期为3天的cookie
+          //  第二个参数为密钥，这里我设置为246521
           this.$cookie.set(
             "password",
             CryptoJS.AES.encrypt(this.loginForm.password, "246521"),
