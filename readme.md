@@ -6,7 +6,7 @@
 
 1. 目前已有echarts 树形图各个参数配置说明.配置最后的效果如下
 
-![1719453376900](image/readme/1719453376900.png)
+![1719453376900](https://github.com/fangyuancode/ProjectTest/blob/master/image/readme/1719453376900.png)
 
 echarts树形配置说明如下，仔细看，不要着急，终将有所收获
 
