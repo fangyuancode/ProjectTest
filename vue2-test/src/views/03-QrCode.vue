@@ -6,8 +6,14 @@
     </div>
     <el-button @click="clearClick" size="small">清理</el-button>
     <el-button @click="reProducet" size="small">重新生成</el-button>
-
+    <br>
+    <el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间">
+    </el-date-picker>
+    <br>
+    <el-date-picker v-model="value2" type="datetime" placeholder="选择日期时间" value-format="yyyy-MM-DD HH:mm:ss">
+    </el-date-picker>
   </div>
+
 </template>
 <script>
 // 引用
@@ -15,7 +21,8 @@ import QRCode from "qrcodejs2";
 export default {
   data() {
     return {
-      qrcode: {},
+      value1: "2024-07-09T15:40:18",
+      value2: "2024-07-01 15:40:18",
     };
   },
   methods: {

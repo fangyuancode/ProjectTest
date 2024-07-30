@@ -29,6 +29,16 @@ const routes = [
     path: '/getheight',
     name: 'getheight',
     component: () => import('../views/04-GetHeight.vue')
+  },
+  {
+    path: '/ExportWord',
+    name: 'ExportWord',
+    component: () => import('../views/05-ExportWord.vue')
+  },
+  {
+    path: '/getContent',
+    name: 'getContent',
+    component: () => import('../views/06-getContent.vue')
   }
 ]
 

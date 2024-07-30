@@ -68,6 +68,16 @@ export default {
       }
     },
   },
+  watch: {
+    "$route.path": {
+      handler(newValue, oldval) {
+        console.log("老路由信息", oldval); //老路由信息
+        console.log("新路由信息", newValue); //新路由信息
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
 };
 </script>
  

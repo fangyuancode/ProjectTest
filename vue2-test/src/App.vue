@@ -5,6 +5,8 @@
       <router-link to="/about">记住密码</router-link> |
       <router-link to="/test">二维码生成</router-link> |
       <router-link to="/getheight">获取元素高度</router-link> |
+      <router-link to="/ExportWord">导出world</router-link> |
+      <router-link to="/getContent">导出试题</router-link> |
 
     </nav>
     <router-view />

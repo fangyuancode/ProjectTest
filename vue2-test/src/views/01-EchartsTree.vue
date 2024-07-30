@@ -327,6 +327,16 @@ export default {
       this.Echarts.setOption(options, true);
     },
   },
+  watch: {
+    "$route.path": {
+      handler(val, oldval) {
+        console.log("老路由信息", oldval); //老路由信息
+        console.log("新路由信息", val); //新路由信息
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
 };
 </script>
 

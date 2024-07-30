@@ -7,15 +7,24 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "angular-expressions": "^1.2.1",
+    "axios": "^1.7.2",
     "core-js": "^3.8.3",
     "crypto-js": "^4.2.0",
+    "docxtemplater": "^3.48.0",
+    "docxtemplater-image-module-free": "^1.1.1",
     "echarts": "^5.5.0",
     "element-ui": "^2.15.14",
+    "file-saver": "^2.0.5",
     "js-cookie": "^3.0.5",
+    "jszip": "^3.10.1",
+    "jszip-utils": "^0.1.0",
+    "pizzip": "^3.1.7",
     "qrcodejs2": "^0.0.2",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
