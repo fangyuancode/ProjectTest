@@ -11,6 +11,14 @@
     <el-checkbox v-model="rememberPassword">记住密码</el-checkbox>
     <br>
     <el-button @click="handleLogin">立即登陆</el-button>
+
+    <div class="content">
+      <div v-for="item in list">
+        <div v-show="showIndex===item.index">
+          {{ item.title }}</div>
+      </div>
+
+    </div>
   </div>
 </template>
  
@@ -27,6 +35,37 @@ export default {
         username: "",
         password: "",
       },
+      // feng
+      showIndex: 1,
+      list: [
+        {
+          index: 1,
+          title: "标题一",
+          editor: "",
+          htmltag: "",
+          eeditorConfig: { placeholder: "请输入内容..." },
+          mode: "default", // or 'simple'
+          toolbarConfig: {},
+        },
+        {
+          index: 2,
+          title: "标题二",
+          editor: "",
+          htmltag: "",
+          editorConfig: { placeholder: "请输入内容..." },
+          mode: "default", // or 'simple'
+          toolbarConfig: {},
+        },
+        {
+          index: 3,
+          title: "标题三",
+          editor: "",
+          htmltag: "",
+          editorConfig: { placeholder: "请输入内容..." },
+          mode: "default", // or 'simple'
+          toolbarConfig: {},
+        },
+      ],
     };
   },
   mounted() {
