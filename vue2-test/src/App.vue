@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <nav>
+      <router-link to="/wangEditor">编辑器</router-link> |
       <router-link to="/">echarts树形图结构配置</router-link> |
       <router-link to="/about">记住密码</router-link> |
       <router-link to="/test">二维码生成</router-link> |
@@ -12,6 +13,7 @@
     <router-view />
   </div>
 </template>
+<style src="@wangeditor/editor/dist/css/style.css"></style>
 
 <style lang="scss">
 #app {

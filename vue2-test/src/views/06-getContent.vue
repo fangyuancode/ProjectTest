@@ -2,7 +2,7 @@
 
   <div>
     导出试题
-    <el-button @click="handleList">立即登陆</el-button>
+    <el-button @click="handleList">导出题库</el-button>
 
   </div>
 
@@ -25,25 +25,46 @@ export default {
         list[i]._Answers.forEach((el) => {
           arr.push(el.label);
         });
-        switch (list[i]._RightAnswerIndexD) {
-          case "0":
-            arr.push("A");
-            break;
-          case "1":
-            arr.push("B");
-            break;
-          case "2":
-            arr.push("C");
-            break;
-          case "3":
-            arr.push("D");
-            break;
+        if (arr.length === 3) {
+          arr.push("");
         }
+
+        let anser = list[i]._RightAnswerIndexD;
+        // 处理多选
+        if (anser instanceof Array) {
+          // 使用map方法将每个元素映射到对应的字母
+          let mappedArr = arr.map(function (item, index) {
+            // 字符'A'的ASCII码是65，因此我们通过加上index（0, 1, 2...）来获取对应的字母
+            // console.log("parseInt", parseInt(item, 10));
+            return String.fromCharCode(65 + parseInt(item, 10));
+          });
+          console.log("mappedArr", mappedArr);
+          // 使用join方法将数组转换成字符串
+          let result = mappedArr.join("");
+          arr.push(result);
+          // 单选的情况
+        } else {
+          switch (anser) {
+            case "0":
+              arr.push("A");
+              break;
+            case "1":
+              arr.push("B");
+              break;
+            case "2":
+              arr.push("C");
+              break;
+            case "3":
+              arr.push("D");
+              break;
+          }
+        }
+
         finArr.push(arr);
       }
       let title = "题库导出";
       console.log(finArr);
-      this.exportExcel(title, finArr);
+      // this.exportExcel(title, finArr);
     },
     //使用import有的属性无法找到
     exportExcel(filename, data) {

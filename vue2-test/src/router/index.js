@@ -39,6 +39,12 @@ const routes = [
     path: '/getContent',
     name: 'getContent',
     component: () => import('../views/06-getContent.vue')
+  },
+  // 07-wangEditor
+  {
+    path: '/wangEditor',
+    name: 'wangEditor',
+    component: () => import('../views/07-wangEditor.vue')
   }
 ]
 
