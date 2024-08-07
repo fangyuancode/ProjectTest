@@ -39,9 +39,6 @@ export default {
   },
   methods: {
     onCreated(editor) {
-      this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
-    },
-    onCreated(editor) {
       this.editor = Object.seal(editor);
       console.log("onCreated", editor);
     },
