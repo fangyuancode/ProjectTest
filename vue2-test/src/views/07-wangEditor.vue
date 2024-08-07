@@ -1,15 +1,13 @@
 <template>
   <div style="border: 1px solid #ccc;">
 
-    <!-- <div v-for="(item,index) in list" :key="index">
-      <div v-show="showIndex===item.index" style="height:60px;background-color: pink;">
-        <h1>ewew{{ item.index }}</h1>
+    <div v-for="(item,index) in list" :key="index">
+      <div v-show="showIndex===item.index">
+
         <Toolbar style="border-bottom: 1px solid #ccc" :editor="item['editor'+item.index]" :defaultConfig="item['toolbarConfig'+item.index]" :mode="item['mode'+item.index]" />
       </div>
-    </div> -->
-    <Toolbar style="border-bottom: 1px solid #ccc" :editor="list[indextag]['editor'+(indextag+1)]" :defaultConfig="list[indextag]['toolbarConfig'+(indextag+1)]" :mode="list[indextag]['mode'+(indextag+1)]" />
+    </div>
     <!-- <Toolbar style="border-bottom: 1px solid #ccc" :editor="editor" :defaultConfig="toolbarConfig" :mode="mode" /> -->
-
     <div class="content">
       <div v-for="(item,index) in list" :key="index">
         <h4>{{item['title'+item.index]}}</h4>
@@ -75,24 +73,14 @@ export default {
   },
   computed: {},
   methods: {
-    onCreated(item, $event) {
-      console.log("onCreated", $event);
-      let falg = false;
-      if (falg) {
-        this.indextag = item.index - 1; //list元素的下标
-      } else {
-        falg = true;
-      }
-
-      console.log("indextag", this.indextag);
-      this.list[item.index - 1]["editor" + item.index] = Object.seal($event); // 一定要用 Object.seal() ，否则会报错
-      // console.log("onCreated", editor);
-      console.log("object", this.list);
-    },
     // onCreated(editor) {
-    //   this.editor = Object.seal(editor);
-    //   console.log("onCreated", editor);
+    //   this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
     // },
+    onCreated(item, $event) {
+      let editor = $event;
+      this.list[item.index - 1]["editor" + item.index] = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
+      console.log("onCreated", editor);
+    },
     onChange(editor) {
       console.log("onChange", editor.children);
     },
@@ -103,11 +91,8 @@ export default {
       console.log("onMaxLength", editor);
     },
     onFocus(item, editor) {
-      console.log("item", item);
-
       this.indextag = item.index - 1; //list元素的下标
-      let indextag = this.indextag;
-      console.log("ww", this.list[indextag]["editor" + (indextag + 1)]);
+      console.log("item", item);
 
       console.log("onFocus", editor);
       this.showIndex = item.index;
@@ -142,7 +127,6 @@ export default {
     // }, 1500);
   },
   beforeDestroy() {
-    console.log("beforeDestroy", this.list[this.indextag]);
     const editor = this.list[this.indextag]["editor" + (this.indextag + 1)];
     if (editor == null) return;
     editor.destroy(); // 组件销毁时，及时销毁编辑器
