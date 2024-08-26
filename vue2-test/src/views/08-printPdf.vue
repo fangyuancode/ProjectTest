@@ -1,7 +1,5 @@
 <template>
-  <div>test
-    我是打开的新页面
-  </div>
+  <div></div>
 </template>
 <script>
 export default {};

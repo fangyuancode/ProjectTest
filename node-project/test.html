@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>上传word文件</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      padding: 0 50px;
+    }
+
+    .operation {
+      padding: 20px;
+    }
+
+    .btn {
+      min-width: 50px;
+      font-size: 20px;
+      color: #fff;
+      background: #118ee9;
+      margin: 0 20px 0 0;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .item {
+      width: 350px;
+      box-sizing: border-box;
+      padding: 4px 14px 4px 14px;
+      color: #000;
+      font-size: 12px;
+      background: #fff;
+    }
+  </style>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx-preview@0.1.15/dist/docx-preview.js"></script>
+
+</head>
+
+<body>
+  <div
+    class="container"
+    id="app"
+  >
+    <div class="operation">
+      <button
+        class="btn"
+        @click="uploadFile"
+      >上传word文件</button>
+    </div>
+    <br>
+    <div v-if="wordData">{{wordData}}</div>
+    <br>
+    <div id="preview"></div>
+  </div>
+  <script>
+    const { createApp, ref, onMounted } = Vue
+    createApp({
+      setup () {
+        let wordData = ref('')
+        const uploadFile = (mark) => {
+          let inputEle = document.createElement('input')
+          inputEle.type = 'file'
+          inputEle.accept = '.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+          inputEle.click()
+          inputEle.addEventListener('input', (event) => {
+            onWord(event)
+          })
+        };
+        function processData (data) {
+          if (!data.length) return [];
+
+          let title = data[0].title; // 假设第一个对象包含题目  
+          let optionsArr = [];
+          let anser = '';
+
+          // 遍历数组，收集选项和答案  
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].optionsArr && data[i].optionsArr.length > 0) {
+              // 合并选项  
+              optionsArr = optionsArr.concat(data[i].optionsArr);
+            }
+            if (data[i].anser && data[i].anser.trim() !== '') {
+              // 找到答案（这里假设答案只会出现一次，并且是最后一个有效的anser字段）  
+              anser = data[i].anser;
+            }
+          }
+
+          // 构造新的数组对象  
+          return [{
+            anser: anser,
+            optionsArr: optionsArr,
+            title: title
+          }];
+        }
+
+        const onWord = (event) => {
+          let reader = new FileReader();
+          let file = event.target.files[0];
+          let options = { inWrapper: false, ignoreWidth: true, ignoreHeight: true }
+          docx.renderAsync(file, document.getElementById("preview"), null, options)
+          let fileName = file.name
+          if (file) {
+            reader.onload = function (e) {
+              const data = e.target.result;
+              // console.log('data', data);
+              // 转文字
+              mammoth.extractRawText({ arrayBuffer: data }).then(function (displayResult) {
+                wordData.value = displayResult.value
+                // console.log('转文字', displayResult.value);
+              }).done();
+              // 转HTML
+              mammoth.convertToHtml({ arrayBuffer: data }).then(function (displayResult) {
+                console.log('转HTML', displayResult);
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(displayResult.value, "text/html");
+
+                // 获取所有的<p>标签  
+                let paragraphs = doc.body.getElementsByTagName('p');
+
+                // 遍历并打印每个<p>标签的内容 
+                let list = []
+                // console.log('paragraphs', paragraphs);
+                let obj = {
+                  title: '',
+                  titleInfo: '',
+                  optionsArr: [],
+                  anser: '',
+                }
+
+                let tagIndex = 1;
+                for (let i = 0; i < paragraphs.length; i++) {
+                  let str = paragraphs[i].textContent
+                  console.log(str);
+                  // 判断是否含有括号
+                  let flag = /\(\s*\)/.test(str);
+                  // let flag = str.match(/\(|\)/g);
+                  // if (!flag) {
+                  //   flag = /\（\）/.test(str); // 注意：这里使用的是全角括号
+                  // }
+                  if (flag) {
+                    obj.title = paragraphs[i].textContent
+                    // console.log(paragraphs[i].textContent);
+
+                  }
+                  // 判断题目中含有代码
+                  if (/^[a-z]/.test(str)) {
+                    obj.titleInfo = obj.titleInfo + str
+                  }
+                  // 判断是否是选项
+                  let op = /^[A-Z]/.test(str);
+                  if (op) {
+                    obj.optionsArr.push(str)
+                  }
+                  if (str.includes('答案')) {
+                    // 判断是答案
+                    obj.anser = str[str.length - 1]
+                    tagIndex = 2
+                  }
+
+                  if (tagIndex === 2) {
+                    list.push(obj)
+                    obj = {
+                      title: '',
+                      titleInfo: '',
+                      optionsArr: [],
+                      anser: '',
+                    }
+                    tagIndex = 1
+
+                  }
+
+                }
+                console.log('list', list);
+
+              }).done();
+              // 转Markdown 文档。
+              mammoth.convertToMarkdown({ arrayBuffer: data }).then(function (displayResult) {
+                // console.log('转Markdown 文档', displayResult);
+              }).done();
+            };
+            reader.readAsArrayBuffer(file);
+          }
+        }
+
+        return {
+          wordData,
+          uploadFile,
+          onWord,
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>

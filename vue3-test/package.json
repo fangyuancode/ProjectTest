@@ -9,9 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "docx-preview": "^0.3.2",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.8.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",

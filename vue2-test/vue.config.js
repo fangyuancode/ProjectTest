@@ -13,5 +13,13 @@ module.exports = defineConfig({
   //   //   '@css': path.resolve('src/assets/styles')
   //   // }
   // }
+  chainWebpack: config => {
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title = '项目测试'
+        return args
+      })
+  }
 
 })

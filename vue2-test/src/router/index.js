@@ -45,6 +45,16 @@ const routes = [
     path: '/wangEditor',
     name: 'wangEditor',
     component: () => import('../views/07-wangEditor.vue')
+  },
+  {
+    path: '/NewPage',
+    name: 'NewPage',
+    component: () => import('../views/09-NewPage.vue')
+  },
+  {
+    path: '/test1',
+    name: 'test1',
+    component: () => import('../views/test.vue')
   }
 ]
 

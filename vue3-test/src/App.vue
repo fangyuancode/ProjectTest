@@ -6,8 +6,9 @@ import { RouterLink, RouterView } from "vue-router";
   <header>
 
     <nav>
-      <RouterLink to="/">Home</RouterLink>|
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/">主页</RouterLink>|
+      <RouterLink to="/exportExcel">测试读取world</RouterLink> |
+      <RouterLink to="/PrintPdf">打印pdf</RouterLink> |
     </nav>
   </header>
 
@@ -15,4 +16,8 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <style scoped>
+nav {
+  width: 100%;
+  margin: 0 auto;
+}
 </style>

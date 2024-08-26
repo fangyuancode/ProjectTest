@@ -1,22 +1,17 @@
 <template>
   <div style="border: 1px solid #ccc;">
-
     <div v-for="(item,index) in list" :key="index">
+      <!-- 通过v-show隐藏工具栏，使得每个编辑界面只对应自己的工具栏 -->
       <div v-show="showIndex===item.index">
-
         <Toolbar style="border-bottom: 1px solid #ccc" :editor="item['editor'+item.index]" :defaultConfig="item['toolbarConfig'+item.index]" :mode="item['mode'+item.index]" />
       </div>
     </div>
-    <!-- <Toolbar style="border-bottom: 1px solid #ccc" :editor="editor" :defaultConfig="toolbarConfig" :mode="mode" /> -->
     <div class="content">
       <div v-for="(item,index) in list" :key="index">
         <h4>{{item['title'+item.index]}}</h4>
-
-        <Editor style="height: 100px; overflow-y: hidden;" v-model="item['html'+item.index]" :defaultConfig="item['defaultConfig'+item.index]" :mode="item['mode'+item.index]" @onCreated="onCreated(item,$event)" @onChange="onChange" @onDestroyed="onDestroyed" @onMaxLength="onMaxLength" @onFocus="onFocus(item,editor)" @onBlur="onBlur" @customAlert="customAlert" @customPaste="customPaste" />
+        <Editor style="height: 100px; overflow-y: hidden;" v-model="item['html'+item.index]" :defaultConfig="item['editorConfig'+item.index]" :mode="item['mode'+item.index]" @onCreated="onCreated(item,$event)" @onChange="onChange" @onDestroyed="onDestroyed" @onMaxLength="onMaxLength" @onFocus="onFocus(item,editor)" @onBlur="onBlur" @customAlert="customAlert" @customPaste="customPaste" />
       </div>
-
     </div>
-
   </div>
 </template>
 <script>
@@ -73,9 +68,6 @@ export default {
   },
   computed: {},
   methods: {
-    // onCreated(editor) {
-    //   this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
-    // },
     onCreated(item, $event) {
       let editor = $event;
       this.list[item.index - 1]["editor" + item.index] = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
@@ -93,7 +85,6 @@ export default {
     onFocus(item, editor) {
       this.indextag = item.index - 1; //list元素的下标
       console.log("item", item);
-
       console.log("onFocus", editor);
       this.showIndex = item.index;
     },
@@ -108,7 +99,6 @@ export default {
       // const html = event.clipboardData.getData('text/html') // 获取粘贴的 html
       // const text = event.clipboardData.getData('text/plain') // 获取粘贴的纯文本
       // const rtf = event.clipboardData.getData('text/rtf') // 获取 rtf 数据（如从 word wsp 复制粘贴）
-
       // 自定义插入内容
       editor.insertText("xxx");
 
@@ -137,6 +127,6 @@ export default {
 .content {
   width: 100%;
   height: 300px;
-  /* background-color: #fcfcfc; */
+  background-color: #fcfcfc;
 }
 </style>
