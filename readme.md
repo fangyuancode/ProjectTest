@@ -292,6 +292,8 @@ directives: {
   },
 ```
 
-
-
 ### 2.vue3 案例说明
+
+添加前度读取world的内容案例，将读取的world的内容，将world的内容转成excel的数据
+
+[详细可以看这篇文章](https://juejin.cn/post/7407260232662974514)

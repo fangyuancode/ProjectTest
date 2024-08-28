@@ -64,7 +64,7 @@ const onWord = (event) => {
           let paragraphs = doc.body.getElementsByTagName("p");
 
           // 处理段落的数据，输出到excel中
-          //handleExcelData(paragraphs);
+          handleExcelData(paragraphs);
         })
         .done();
       // convertToMarkdown--转Markdown 文档
@@ -78,12 +78,10 @@ const onWord = (event) => {
     reader.readAsArrayBuffer(file);
   }
 };
-function handleExcelData(paragraphs) {
-  let list = [];
-  // console.log('paragraphs', paragraphs);
+// 处理选择题
+function handleSelect(list, paragraphs) {
   let obj = {
     title: "",
-
     optionsArr: [],
     anser: "",
   };
@@ -91,8 +89,10 @@ function handleExcelData(paragraphs) {
   // 遍历并打印每个<p>标签的内容
   for (let i = 0; i < paragraphs.length; i++) {
     let str = paragraphs[i].textContent;
+    console.log("str", str);
+
     // 判断是否含有括号
-    // let flag = /\(|\)/.test(str);
+
     let flag = /\(\s*\)/.test(str);
     if (flag) {
       obj.title = paragraphs[i].textContent;
@@ -103,14 +103,28 @@ function handleExcelData(paragraphs) {
     if (op) {
       obj.optionsArr.push(str);
     }
-
-    if (str.includes("答案")) {
-      // 判断是答案
-      // console.log("str", str.replace(/[^a-zA-Z]/g, ""));
-      // str.replace(/[^a-zA-Z]/g, "");
+    if (str.trim().slice(-2) === "错误") {
+      obj.anser = "B";
+      obj.optionsArr = ["A", "B"];
+      tagIndex = 2;
+    } else if (str.trim().slice(-2) === "正确") {
+      obj.anser = "A";
+      obj.optionsArr = ["A", "B"];
+      tagIndex = 2;
+    } else if (str.includes("正确")) {
+      // 判断选择题的是答案
       obj.anser = str.replace(/[^a-zA-Z]/g, "");
       tagIndex = 2;
     }
+    // if (str.includes("答案")) {
+    //   // 判断选择题的是答案
+    //   obj.anser = str.replace(/[^a-zA-Z]/g, "");
+
+    //   tagIndex = 2;
+    // }
+    /**
+     * 处理单选题和多选题结束
+     * */
     // 处理完一题后，将原来存储的数据置空
     if (tagIndex === 2) {
       list.push(obj);
@@ -122,8 +136,71 @@ function handleExcelData(paragraphs) {
       tagIndex = 1;
     }
   }
+}
+// 处理判断题
+function handleJudgment(list, paragraphs) {
+  let obj = {
+    title: "",
+    optionsArr: [],
+    anser: "",
+  };
+  let tagIndex = 1;
+  // 遍历并打印每个<p>标签的内容
+  for (let i = 0; i < paragraphs.length; i++) {
+    let str = paragraphs[i].textContent;
+    // console.log(paragraphs[i].textContent);
+
+    // 判断是否含有括号
+    let flag = /\(\s*\)/.test(str);
+    // console.log("flag", flag);
+    if (flag) {
+      obj.title = paragraphs[i].textContent;
+      tagIndex = 1;
+    }
+    // 判断是否是选项
+    let op = /^[A-Z]/.test(str);
+    // console.log("op", op);
+    if (op) {
+      obj.optionsArr.push(str);
+      tagIndex = 1;
+    }
+    if (str.trim().slice(-2) === "错误") {
+      obj.anser = "B";
+      obj.optionsArr = ["A", "B"];
+      tagIndex = 2;
+    } else if (str.trim().slice(-2) === "正确") {
+      obj.anser = "A";
+      obj.optionsArr = ["A", "B"];
+      tagIndex = 2;
+    } else if (str.includes("正确")) {
+      // 判断选择题的是答案
+      obj.anser = str.replace(/[^a-zA-Z]/g, "");
+      tagIndex = 2;
+    }
+    /**
+     * 处理单选题和多选题结束
+     * */
+    // 处理完一题后，将原来存储的数据置空
+    if (tagIndex === 2 && obj.optionsArr.length > 0) {
+      list.push(obj);
+      obj = {
+        title: "",
+        optionsArr: [],
+        anser: "",
+      };
+      tagIndex = 1;
+    }
+  }
+}
+function handleExcelData(paragraphs) {
+  let list = [];
+
+  //  处理单选题和多选题开始
+  // handleSelect(list, paragraphs);
+
+  handleJudgment(list, paragraphs);
   // 这里最终处理的数据
-  // console.log("list", list);
+  console.log("list", list);
   handleExport(list);
 }
 // exportExcel准备导出excel
@@ -152,17 +229,10 @@ function handleExport(list) {
   console.log("list", list);
   let listArr = [];
   listArr.push(titleArr);
-  let flag = false;
   list.forEach((el) => {
     let arr = new Array(titleArr.length); // 创建一个长度为5的数组
-    if (!flag) {
-      arr[0] = "/计算机程序设计";
-      flag = true;
-    } else {
-      arr[0] = "";
-    }
-
-    arr[1] = "单选题";
+    arr[0] = "/计算机程序设计-鸿蒙编程";
+    arr[1] = "判断题";
     // 题干
     arr[2] = el.title;
     // 小题题型
@@ -184,7 +254,7 @@ function handleExport(list) {
     listArr.push(arr);
   });
   console.log("listArr", listArr);
-  exportExcel("单选题导出", listArr);
+  exportExcel("鸿蒙编程-单选题", listArr);
 }
 
 // if (file) {
