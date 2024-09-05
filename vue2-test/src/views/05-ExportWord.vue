@@ -54,15 +54,16 @@ export default {
         // });
 
         try {
-          // 用模板变量的值替换所有模板变量
-          doc.render({
+          let obj = {
             name: "序号",
             first_name:
               "1.当导体对磁场作相对运动而切割磁力线时，导体中便有感应电动势产生；当与回路相交链的磁通发生变化时，回路中也会有感应电动势产生。这是两种本质上不同的感应电动势。",
-            last_name: "   (       )",
+            last_name: " (       )",
             phone: "试卷",
             description: "考试试卷",
-          });
+          };
+          // 用模板变量的值替换所有模板变量
+          doc.render(obj);
         } catch (error) {
           // 抛出异常
           let e = {

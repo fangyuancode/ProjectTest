@@ -12,16 +12,19 @@ const router = createRouter({
     {
       path: '/exportExcel',
       name: 'exportExcel',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/02-exportExcel.vue')
     },
     {
-      path: '/PrintPdf',
+      path: '/printPdf',
       name: 'printPdf',
       component: () => import('../views/01-printPdf.vue')
+    },
+    {
+      path: '/testDb',
+      name: 'testDb',
+      component: () => import('../views/03-testDb.vue')
     }
+    // 03-testDb.vue
   ]
 })
 

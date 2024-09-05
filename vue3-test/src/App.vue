@@ -8,7 +8,10 @@ import { RouterLink, RouterView } from "vue-router";
     <nav>
       <RouterLink to="/">主页</RouterLink>|
       <RouterLink to="/exportExcel">测试读取world</RouterLink> |
-      <RouterLink to="/PrintPdf">打印pdf</RouterLink> |
+      <RouterLink to="/printPdf">打印pdf</RouterLink> |
+      <RouterLink to="/testDb">测试indexDb</RouterLink> |
+
+      <!-- testDb -->
     </nav>
   </header>
 
@@ -17,7 +20,7 @@ import { RouterLink, RouterView } from "vue-router";
 
 <style scoped>
 nav {
-  width: 100%;
+  width: 800px;
   margin: 0 auto;
 }
 </style>

@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas'
-import jsPDF, { RGBAData } from 'jspdf'
+import jsPDF from 'jspdf'
 
 /** a4纸的尺寸[595.28,841.89], 单位毫米 */
 const [PAGE_WIDTH, PAGE_HEIGHT] = [595.28, 841.89]
