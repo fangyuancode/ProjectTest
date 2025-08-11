@@ -10,8 +10,9 @@ import { RouterLink, RouterView } from "vue-router";
       <RouterLink to="/exportExcel">测试读取world</RouterLink> |
       <RouterLink to="/printPdf">打印pdf</RouterLink> |
       <RouterLink to="/testDb">测试indexDb</RouterLink> |
+      <RouterLink to="/joint">测试 joint</RouterLink> |
 
-      <!-- testDb -->
+      <!-- joint -->
     </nav>
   </header>
 

@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@joint/core": "^4.0.4",
     "docx-preview": "^0.3.2",
     "element-plus": "^2.8.1",
     "html2canvas": "^1.4.1",

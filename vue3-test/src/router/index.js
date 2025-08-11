@@ -23,6 +23,11 @@ const router = createRouter({
       path: '/testDb',
       name: 'testDb',
       component: () => import('../views/03-testDb.vue')
+    },
+    {
+      path: '/joint',
+      name: 'joint',
+      component: () => import('../views/05-joint.vue')
     }
     // 03-testDb.vue
   ]

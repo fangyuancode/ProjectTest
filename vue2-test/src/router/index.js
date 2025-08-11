@@ -5,11 +5,11 @@ import HomeView from '../views/01-EchartsTree.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    redirect: '/home'
+  // {
+  //   path: '/',
+  //   redirect: '/home'
 
-  },
+  // },
   {
     path: '/home',
     name: 'home',
@@ -55,7 +55,29 @@ const routes = [
     path: '/test1',
     name: 'test1',
     component: () => import('../views/test.vue')
-  }
+  },
+  {
+    path: '/',
+    name: 'menu',
+    component: () => import('../views/10-Menu.vue')
+  },
+  {
+    path: '/DragSide',
+    name: 'DragSide',
+    component: () => import('../views/011-DragSide.vue')
+  },
+  // MergeTable
+  {
+    path: '/MergeTable',
+    name: 'MergeTable',
+    component: () => import('../views/012-MergeTables.vue')
+  },
+  // MergeColumn
+  {
+    path: '/MergeColumn',
+    name: 'MergeColumn',
+    component: () => import('../views/012-MergeColumn.vue')
+  },
 ]
 
 const router = new VueRouter({

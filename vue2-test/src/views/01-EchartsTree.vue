@@ -1,6 +1,7 @@
 <template>
   <div class="ent-structure" ref="ent-structure">
     <div class="ent-tree" ref="ent-tree"></div>
+    <el-button @click="btnClick">ddddd</el-button>
   </div>
 </template>
 
@@ -103,6 +104,9 @@ export default {
   },
 
   methods: {
+    btnClick() {
+      this.$router.push("/");
+    },
     formatData(data) {
       this.$nextTick(() => {
         this.recursive(data);
